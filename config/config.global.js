@@ -191,7 +191,7 @@ config.vcenter.datacenter = 'vcenter';          //datacenter name
 config.vcenter.dvsswitch = 'vswitch';           //dvsswitch name
 config.vcenter.strictSSL = false;               //Validate the certificate or ignore
 config.vcenter.ca = '';                         //specify the certificate key file
-config.vcenter.wsdl = '/usr/src/contrail/contrail-web-core/webroot/js/vim.wsdl';
+config.vcenter.wsdl = '/var/lib/contrail/contrail-web-core/webroot/js/vim.wsdl';
 
 /* Discovery Service */
 config.discoveryService = {};
@@ -255,15 +255,15 @@ config.redis_dump_file = '/var/lib/redis/dump-webui.rdb';
 config.redis_password = '';
 
 /* Logo File: Use complete path of logo file location */
-config.logo_file = '/usr/src/contrail/contrail-web-core/webroot/img/opencontrail-logo.png';
+config.logo_file = '/var/lib/contrail/contrail-web-core/webroot/img/opencontrail-logo.png';
 
 /* Favicon File: Use complete path of favicon file location */
-config.favicon_file = '/usr/src/contrail/contrail-web-core/webroot/img/opencontrail-favicon.ico';
+config.favicon_file = '/var/lib/contrail/contrail-web-core/webroot/img/opencontrail-favicon.ico';
 
 config.featurePkg = {};
 /* Add new feature Package Config details below */
 config.featurePkg.webController = {};
-config.featurePkg.webController.path = '/usr/src/contrail/contrail-web-controller';
+config.featurePkg.webController.path = '/var/lib/contrail/contrail-web-controller';
 config.featurePkg.webController.enable = true;
 
 /* Enable/disable Stat Query Links in Sidebar*/
