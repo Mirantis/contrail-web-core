@@ -54,7 +54,7 @@ function getJsonSchema (request, response, appData)
     var id = validateId(request),
         config = configUtils.getConfig();
     var schemaDir = commonUtils.getValueByJsonPath(config,"jsonSchemaPath",
-            "/usr/src/contrail/contrail-web-core/src/serverroot/configJsonSchemas/sample/");
+            "/var/lib/contrail/contrail-web-core/src/serverroot/configJsonSchemas/sample/");
     var filePath = path.join(schemaDir, id + '-schema.json');
     readFileAndReturnData (filePath, function(error,data) {
         if (error) {
@@ -75,7 +75,7 @@ function getObjectList (request, response, appData)
 {
     var config = configUtils.getConfig();
     var schemaDir = commonUtils.getValueByJsonPath(config,"jsonSchemaPath",
-            "/usr/src/contrail/contrail-web-core/src/serverroot/configJsonSchemas/sample/");
+            "/var/lib/contrail/contrail-web-core/src/serverroot/configJsonSchemas/sample/");
     var filePath = path.join(schemaDir + '/objectList.json');
     readFileAndReturnData (filePath, function(error,data) {
         if (error) {
@@ -104,7 +104,7 @@ function getPropertiesForObject (request, response, appData)
     var id = validateId(request),
         config = configUtils.getConfig();;
     var schemaDir = commonUtils.getValueByJsonPath(config,"jsonSchemaPath",
-        "/usr/src/contrail/contrail-web-core/src/serverroot/configJsonSchemas/sample/");
+        "/var/lib/contrail/contrail-web-core/src/serverroot/configJsonSchemas/sample/");
     var filePath = path.join(schemaDir, id + '-schema.json');
     fs.readFile(filePath, 'utf8', function (error,data) {
         if (error) {
