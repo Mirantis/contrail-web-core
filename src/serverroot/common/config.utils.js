@@ -105,6 +105,7 @@ function subscribeMOTDFileChange ()
 
 function updateAndWatchMOTDFileChange (contents, filePath)
 {
+    var logutils = require('../utils/log.utils');
     updateMOTD(contents);
     if (null == filePath) {
         return;

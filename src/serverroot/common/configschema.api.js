@@ -56,7 +56,7 @@ function getJsonSchema (request, response, appData)
 {
     var id = validateId(request);
     var schemaDir = commonUtils.getValueByJsonPath(config,"jsonSchemaPath",
-            defaultSchemaDir);
+        defaultSchemaDir);
     var filePath = path.join(schemaDir, id + '-schema.json');
     readFileAndReturnData (filePath, function(error,data) {
         if (error) {
@@ -76,7 +76,7 @@ function getJsonSchema (request, response, appData)
 function getObjectList (request, response, appData)
 {
     var schemaDir = commonUtils.getValueByJsonPath(config,"jsonSchemaPath",
-            defaultSchemaDir);
+        defaultSchemaDir);
     var filePath = path.join(schemaDir + '/objectList.json');
     readFileAndReturnData (filePath, function(error,data) {
         if (error) {
