@@ -9,7 +9,7 @@ var cassandra = require("cassandra-driver");
 var uddKeyspace = "config_webui";
 var tableName = "user_widgets";
 var config = configUtils.getConfig();
-var client = new cassandra.Client({ contactPoints: config.cassandra.server_ips, keyspace: "system" });
+var client = new cassandra.Client({ contactPoints: config.cassandra.server_ips, protocolOptions: {port: config.cassandra.server_port}, keyspace: "system" });
 client.execute("SELECT keyspace_name FROM system_schema.keyspaces;", function(err, result) {
     if (err) {
         console.error(err);
@@ -102,7 +102,7 @@ client.execute("SELECT keyspace_name FROM system_schema.keyspaces;", function(er
 
 function connectDB() {
     var config = configUtils.getConfig();
-    return new cassandra.Client({ contactPoints: config.cassandra.server_ips, keyspace: uddKeyspace });
+    return new cassandra.Client({ contactPoints: config.cassandra.server_ips, protocolOptions: {port: config.cassandra.server_port}, keyspace: uddKeyspace });
 }
 
 function createWidget(req, res) {
