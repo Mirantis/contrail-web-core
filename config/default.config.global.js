@@ -250,15 +250,15 @@ config.redis_server_ip = '127.0.0.1';
 config.redis_dump_file = '/var/lib/redis/dump-webui.rdb';
 
 /* Logo File: Use complete path of logo file location */
-config.logo_file = '/usr/src/contrail/contrail-web-core/webroot/img/juniper-networks-logo.png';
+config.logo_file = '/var/lib/contrail/contrail-web-core/webroot/img/juniper-networks-logo.png';
 
 /* Favicon File: Use complete path of favicon file location */
-config.favicon_file = '/usr/src/contrail/contrail-web-core/webroot/img/juniper-networks-favicon.ico';
+config.favicon_file = '/var/lib/contrail/contrail-web-core/webroot/img/juniper-networks-favicon.ico';
 
 config.featurePkg = {};
 /* Add new feature Package Config details below */
 config.featurePkg.webController = {};
-config.featurePkg.webController.path = '/usr/src/contrail/contrail-web-controller';
+config.featurePkg.webController.path = '/var/lib/contrail/contrail-web-controller';
 config.featurePkg.webController.enable = true;
 
 /* Enable/disable Stat Query Links in Sidebar*/
