@@ -83,21 +83,27 @@ function doNovaOpCb (reqUrl, apiProtoIP, tenantId, req, novaCallback, stopRetry,
 }         
 
 /* Wrapper function to GET Data from Nova-Server */
-novaApi.get = function(reqUrl, apiProtoIP, req, callback, stopRetry, appHeaders) {
+novaApi.get = function(reqUrl, apiProtoIP, req, callback, stopRetry, appHeaders,
+                       tenantStr) {
     var headers = {};
     var forceAuth = stopRetry;
-    var tenantId = getTenantIdByReqCookie(req);
     var novaAPIServer = getNovaAPIServer();
-    if (null == tenantId) {
-        /* Just return as we will be redirected to login page */
-        return;
+    if (null == tenantStr) {
+        /* if tenantStr not specified try to get it from request */
+        var tenantStr = getTenantIdByReqCookie(req);
     }
 
     headers['User-Agent'] = 'Contrail-WebClient';
-    doNovaOpCb(reqUrl, apiProtoIP, tenantId, req, novaApi.get, stopRetry,
+    doNovaOpCb(reqUrl, apiProtoIP, tenantStr, req, novaApi.get, stopRetry,
                appHeaders, function(err, tokenObj) {
         if ((err) || (null == tokenObj) || (null == tokenObj.id)) {
-            callback(err, null);
+            if (tenantStr == 'admin') {
+                callback(err, null);
+            } else {
+                /* Retry with admin tenant in case of fails */
+                novaApi.get(reqUrl, apiProtoIP, req, callback, true, undefined,
+                            'admin');
+            }
         } else {
             headers['X-Auth-Token'] = tokenObj.id;
             novaAPIServer.api['hostname'] = apiProtoIP['ip'];
@@ -628,18 +634,21 @@ function getOSHostList(req, callback)
     });
 }
 
-function getNovaDataByReqUrl (req, reqUrl, callback)
+function getNovaDataByReqUrl (req, reqUrl, callback, tenantStr)
 {
-    var tenantStr = getTenantIdByReqCookie(req);
     if (null == tenantStr) {
-        /* Just return as we will be redirected to login page */
-        return;
+        var tenantStr = getTenantIdByReqCookie(req);
     }
     authApi.getTokenObj({'req': req, 'tenant': tenantStr, 'forceAuth':
                          false}, function(err, data) {
         if ((null != err) || (null == data) || (null == data['tenant'])) {
-            logutils.logger.error("Error in getting token object for tenant: " + tenantStr);
-            commonUtils.handleAuthToAuthorizeError(err, req, callback);
+            if (tenantStr == 'admin') {
+                logutils.logger.error("Error in getting token object for tenant: " + tenantStr);
+                commonUtils.handleAuthToAuthorizeError(err, req, callback);
+            } else {
+                /* Try to make request with admin tenant */
+                getNovaDataByReqUrl(req, reqUrl, callback, 'admin');
+            }
             return;
         }
         var tenantId = data['tenant']['id'];
